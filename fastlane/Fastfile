@@ -35,7 +35,12 @@ test_devices = ["iPhone X", "iPad Pro (12.9-inch) (2nd generation)"]
 ##########
 lane :tryOuts do 
   test
+  xcov(
+  project: "Memory.xcodeproj",
+  scheme: "Memory",
+  output_directory: "xcov_output"
 
+)
 end
 
 
