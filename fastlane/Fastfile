@@ -35,7 +35,6 @@ test_devices = ["iPhone X", "iPad Pro (12.9-inch) (2nd generation)"]
 ##########
 lane :tryOuts do 
   test
-  screenshots
 
 end
 
