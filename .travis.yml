@@ -13,3 +13,11 @@ xcode_scheme: MemoryTests
 script:
     - fastlane tryOuts
 
+notifications: 
+  email:
+    recipients: 
+      - adrian.rosales@wikilane.com
+      - scott.otoole@wikilane.com
+    on_success: never
+    on_failure: always
+

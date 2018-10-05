@@ -34,10 +34,7 @@ test_devices = ["iPhone X", "iPad Pro (12.9-inch) (2nd generation)"]
 # - WikiTry
 ##########
 lane :tryOuts do 
-  run_tests(
-    scheme: "Memory",
-    slack_channel: "#swift_invoicehome"
-  )
+  test
   screenshots
 
 end
