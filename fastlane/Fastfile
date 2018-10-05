@@ -35,7 +35,6 @@ test_devices = ["iPhone X", "iPad Pro (12.9-inch) (2nd generation)"]
 ##########
 lane :tryOuts do 
   run_tests(
-    pretext:"This is a test of fastlane's integration with Slack",
     scheme: "Memory",
     slack_channel: "#swift_invoicehome"
   )
