@@ -3,7 +3,6 @@
 //  Example
 //
 //  Created by Felix Krause on 10/8/15.
-//  Copyright © 2015 Felix Krause. All rights reserved.
 //
 
 // -----------------------------------------------------
@@ -33,8 +32,7 @@ func snapshot(_ name: String, waitForLoadingIndicator: Bool) {
 
 /// - Parameters:
 ///   - name: The name of the snapshot
-///   - timeout: Amount of seconds to wait until the network loading indicator disappears.
-///   Pass `0` if you don't want to wait.
+///   - timeout: Amount of seconds to wait until the network loading indicator disappears. Pass `0` if you don't want to wait.
 func snapshot(_ name: String, timeWaitingForIdle timeout: TimeInterval = 20) {
     Snapshot.snapshot(name, timeWaitingForIdle: timeout)
 }
@@ -71,7 +69,7 @@ open class Snapshot: NSObject {
     }
 
     open class func setupSnapshot(_ app: XCUIApplication) {
-
+        
         Snapshot.app = app
 
         do {
@@ -90,7 +88,7 @@ open class Snapshot: NSObject {
             print("CacheDirectory is not set - probably running on a physical device?")
             return
         }
-
+        
         let path = cacheDirectory.appendingPathComponent("language.txt")
 
         do {
@@ -107,7 +105,7 @@ open class Snapshot: NSObject {
             print("CacheDirectory is not set - probably running on a physical device?")
             return
         }
-
+        
         let path = cacheDirectory.appendingPathComponent("locale.txt")
 
         do {
@@ -127,7 +125,7 @@ open class Snapshot: NSObject {
             print("CacheDirectory is not set - probably running on a physical device?")
             return
         }
-
+        
         let path = cacheDirectory.appendingPathComponent("snapshot-launch_arguments.txt")
         app.launchArguments += ["-FASTLANE_SNAPSHOT", "YES", "-ui_testing"]
 
@@ -149,25 +147,20 @@ open class Snapshot: NSObject {
             waitForLoadingIndicatorToDisappear(within: timeout)
         }
 
-        print("snapshot: \(name)")
-        // more information about this, check out https://docs.fastlane.tools/actions/snapshot/#how-does-it-work
+        print("snapshot: \(name)") // more information about this, check out https://docs.fastlane.tools/actions/snapshot/#how-does-it-work
 
         sleep(1) // Waiting for the animation to be finished (kind of)
 
         #if os(OSX)
             XCUIApplication().typeKey(XCUIKeyboardKeySecondaryFn, modifierFlags: [])
         #else
-
+            
             guard let app = self.app else {
                 print("XCUIApplication is not set. Please call setupSnapshot(app) before snapshot().")
                 return
             }
-
-            guard let window = app.windows.allElementsBoundByIndex.first(where: { $0.frame.isEmpty == false }) else {
-                print("Couldn't find an element window in XCUIApplication with a non-empty frame.")
-                return
-            }
-
+            
+            let window = app.windows.firstMatch
             let screenshot = window.screenshot()
             guard let simulator = ProcessInfo().environment["SIMULATOR_DEVICE_NAME"], let screenshotsDir = screenshotsDirectory else { return }
             let path = screenshotsDir.appendingPathComponent("\(simulator)-\(name).png")
@@ -260,7 +253,7 @@ private extension XCUIElementQuery {
     }
 
     var deviceStatusBars: XCUIElementQuery {
-        let deviceWidth = XCUIApplication().frame.width
+        let deviceWidth = XCUIApplication().windows.firstMatch.frame.width
 
         let isStatusBar = NSPredicate { (evaluatedObject, _) in
             guard let element = evaluatedObject as? XCUIElementAttributes else { return false }
@@ -280,4 +273,4 @@ private extension CGFloat {
 
 // Please don't remove the lines below
 // They are used to detect outdated configuration files
-// SnapshotHelperVersion [1.10]
+// SnapshotHelperVersion [1.12]

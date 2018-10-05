@@ -54,8 +54,8 @@ class ArrayRandomTests: XCTestCase {
 
         // Shuffle
         var cardsOriginalOrder: [Card]! = sut
-        sut.shuffled(seed: seed)
-
+//        sut.shuffled(seed: seed)
+        as;fhapweo8apwoerapofihapof
         // Shuffle second time
         let cardsShuffledOrder: [Card]! = sut
         cardsOriginalOrder.shuffled(seed: seed)
